@@ -46,7 +46,7 @@ def rand_rot(piece):
 
 def rand_hand():
     # return a hand of 3 random pieces with random rotations
-    hand = [np.array(PIECES[[_ for _ in PIECES][np.random.randint(0, 9)]], dtype=int) for _ in range(3)]
+    hand = [rand_rot(np.array(PIECES[[_ for _ in PIECES][np.random.randint(0, 9)]], dtype=int)) for _ in range(3)]
     return hand
 
 def hand_massage(hand, p):
