@@ -151,27 +151,22 @@ def main():
                     else:
                         break
 
-        # TODO: Edit logic
-        # Clear row/col's of 10
-        for i in range(10):
-            if np.sum(grid[i, ]) == 20:
-                score += 10
-                grid[i,] = 0
-            elif np.sum(grid[:, i]) == 20:
-                score += 10
-                grid[:, i] = 0
-            for j in range(10):
-                if np.sum(grid[i, ]) == 20 and np.sum(grid[:, j]) == 20:
-                    score += 20
-                    grid[i, ] = 0
-                    grid[:, j] = 0
+        # Clear rows and columns
+        rows_to_clear = np.where(grid.sum(axis=1) >= 20)
+        columns_to_clear = np.where(grid.sum(axis=0) >= 20)
 
-        print(_pieces)
+        score += (len(rows_to_clear[0]) + len(columns_to_clear[0])) * 10
+        for l in rows_to_clear[0]:
+            grid[l, ] = 0
+        for l in columns_to_clear[0]:
+            grid[:, l] = 0
+
+        #print(_pieces)
         # Check if game can continue
         if len(_pieces) > 0:
             for i in _pieces:
                 p = hand[i]
-                print(p)
+                #print(p)
                 count = 0
                 # print(np.sum(p))
                 x = p.shape[0]
@@ -187,7 +182,7 @@ def main():
         else:
             count = 999999
 
-        print(count)
+        #print(count)
         if count == 0:
             font = pygame.font.SysFont('Calibri', 25, True, False)
             text = font.render("Score {}".format(score), True, RED)
