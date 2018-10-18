@@ -1,158 +1,0 @@
-[33mcommit f55a47cebd147ebea0948ed765837c1957aff5b1[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
-Author: vm <anthony.shaw212@gmail.com>
-Date:   Tue Oct 16 15:43:31 2018 -0400
-
-    Updated the game
-
-[1mdiff --git a/1010_game.py b/1010_game.py[m
-[1mindex c8b0be3..23cf424 100644[m
-[1m--- a/1010_game.py[m
-[1m+++ b/1010_game.py[m
-[36m@@ -26,8 +26,9 @@[m [mdef main():[m
-     clock = pygame.time.Clock()[m
- [m
-     hand = pieces.rand_hand()[m
-[31m-    print(hand)[m
-[32m+[m[32m    # print(hand)[m[41m[m
- [m
-[32m+[m[32m    _selected = None[m[41m[m
-     _pieces = [0, 1, 2][m
- [m
-     score = 0[m
-[36m@@ -46,54 +47,62 @@[m [mdef main():[m
- [m
-                     if event.key == pygame.K_LEFT:[m
-                         if 1 <= min(locs[1]) <= 9:[m
-[31m-                            print(_pieces)[m
-[32m+[m[32m                            # print(_pieces)[m[41m[m
-                             p_space[locs[0], locs[1]] = 0[m
-                             p_space[locs[0], locs[1] - 1] = 2[m
-                             locs = np.where(p_space == 2)[m
- [m
-                     elif event.key == pygame.K_RIGHT:[m
-                         if 0 <= max(locs[1]) < 9:[m
-[31m-                            print(_pieces)[m
-[32m+[m[32m                            # print(_pieces)[m[41m[m
-                             p_space[locs[0], locs[1]] = 0[m
-                             p_space[locs[0], locs[1] + 1] = 2[m
-                             locs = np.where(p_space == 2)[m
- [m
-                     elif event.key == pygame.K_UP:[m
-                         if 1 <= min(locs[0]) < 9:[m
-[31m-                            print(_pieces)[m
-[32m+[m[32m                            # print(_pieces)[m[41m[m
-                             p_space[locs[0], locs[1]] = 0[m
-                             p_space[locs[0]-1, locs[1]] = 2[m
-                             locs = np.where(p_space == 2)[m
- [m
-                     elif event.key == pygame.K_DOWN:[m
-                         if 0 < max(locs[0]) < 9:[m
-[31m-                            print(_pieces)[m
-[32m+[m[32m                            # print(_pieces)[m[41m[m
-                             p_space[locs[0], locs[1]] = 0[m
-                             p_space[locs[0]+1, locs[1]] = 2[m
-                             locs = np.where(p_space == 2)[m
- [m
-[32m+[m[32m                    # Return piece to hand, do not place[m[41m[m
-[32m+[m[32m                    elif event.key == pygame.K_ESCAPE:[m[41m[m
-[32m+[m[32m                        p_space[locs[0], locs[1]] = 0[m[41m[m
-[32m+[m[32m                        _pieces.append(_selected)[m[41m[m
-[32m+[m[32m                        _selected = None[m[41m[m
-[32m+[m[41m[m
-                     # Place piece[m
-                     elif event.key == pygame.K_TAB:[m
-                         elem_sum = np.sum([p_space[locs[0], locs[1]], grid[locs[0], locs[1]]], axis=0)[m
-[31m-                        print(elem_sum)[m
-[31m-[m
-[32m+[m[32m                        # print(elem_sum)[m[41m[m
-                         illegal_count = np.where(elem_sum >= 3)[m
-[31m-                        print(np.shape(illegal_count)[1])[m
-[32m+[m[32m                        # print(np.shape(illegal_count)[1])[m[41m[m
- [m
-                         if np.shape(illegal_count)[1] == 0:[m
-                             p_space[locs[0], locs[1]] = 0[m
-                             grid[locs[0], locs[1]] = 2[m
-[32m+[m[32m                            # Update score for placed piece[m[41m[m
-[32m+[m[32m                            score += (np.sum(elem_sum)/2)[m[41m[m
- [m
-                 elif event.key == pygame.K_1:[m
-[31m-                    print(_pieces)[m
-[32m+[m[32m                    # print(_pieces)[m[41m[m
-                     if 0 in _pieces:[m
-                         p = 2*hand[0].astype(int)[m
-[31m-                        print(p)[m
-[32m+[m[32m                        # print(p)[m[41m[m
-                         px = p.shape[0][m
-                         py = p.shape[1][m
- [m
-                         p_space[5:5+px, 5:5+py] += p[m
- [m
-[32m+[m[32m                        _selected = 0[m[41m[m
-                         _pieces.remove(0)[m
-                     elif len(_pieces) == 0:[m
-                         hand = pieces.rand_hand()[m
-[36m@@ -103,15 +112,16 @@[m [mdef main():[m
-                         break[m
- [m
-                 elif event.key == pygame.K_2:[m
-[31m-                    print(_pieces)[m
-[32m+[m[32m                    # print(_pieces)[m[41m[m
-                     if 1 in _pieces:[m
-                         p = 2*hand[1].astype(int)[m
-[31m-                        print(p)[m
-[32m+[m[32m                        # print(p)[m[41m[m
-                         px = p.shape[0][m
-                         py = p.shape[1][m
- [m
-                         p_space[5:5+px, 5:5+py] += p[m
- [m
-[32m+[m[32m                        _selected = 1[m[41m[m
-                         _pieces.remove(1)[m
- [m
-                     elif len(_pieces) == 0:[m
-[36m@@ -121,15 +131,16 @@[m [mdef main():[m
-                     else:[m
-                         break[m
-                 elif event.key == pygame.K_3:[m
-[31m-                    print(_pieces)[m
-[32m+[m[32m                    # print(_pieces)[m[41m[m
-                     if 2 in _pieces:[m
-                         p = 2 * hand[2].astype(int)[m
-[31m-                        print(p)[m
-[32m+[m[32m                        # print(p)[m[41m[m
-                         px = p.shape[0][m
-                         py = p.shape[1][m
- [m
-                         p_space[5:5 + px, 5:5 + py] += p[m
- [m
-[32m+[m[32m                        _selected = 2[m[41m[m
-                         _pieces.remove(2)[m
- [m
-                     elif len(_pieces) == 0:[m
-[36m@@ -184,10 +195,9 @@[m [mdef main():[m
-                         color = GREEN[m
-                     pygame.draw.rect(screen,[m
-                                      color,[m
-[31m-                                     [p*100 + (MARGIN + 15) * (i+1) + MARGIN,[m
-[31m-                                      350 + (MARGIN + 15) * (j+1) + MARGIN,[m
-[31m-                                      15,[m
-[31m-                                      15])[m
-[32m+[m[32m                                     [p*100 + (MARGIN + 15) * (j+1) + MARGIN,[m[41m[m
-[32m+[m[32m                                      350 + (MARGIN + 15) * (i+1) + MARGIN,[m[41m[m
-[32m+[m[32m                                      15, 15])[m[41m[m
- [m
-         font = pygame.font.SysFont('Calibri', 25, True, False)[m
-         text = font.render("Score {}".format(score), True, RED)[m
-[1mdiff --git a/pieces.py b/pieces.py[m
-[1mindex 2c01297..7579844 100644[m
-[1m--- a/pieces.py[m
-[1m+++ b/pieces.py[m
-[36m@@ -46,7 +46,7 @@[m [mdef rand_rot(piece):[m
- [m
- def rand_hand():[m
-     # return a hand of 3 random pieces with random rotations[m
-[31m-    hand = [np.array(PIECES[[_ for _ in PIECES][np.random.randint(0, 9)]], dtype=int) for _ in range(3)][m
-[32m+[m[32m    hand = [rand_rot(np.array(PIECES[[_ for _ in PIECES][np.random.randint(0, 9)]], dtype=int)) for _ in range(3)][m
-     return hand[m
- [m
- def hand_massage(hand, p):[m
