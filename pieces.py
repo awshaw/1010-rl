@@ -49,5 +49,22 @@ def rand_hand():
     hand = [rand_rot(np.array(PIECES[[_ for _ in PIECES][np.random.randint(0, 9)]], dtype=int)) for _ in range(3)]
     return hand
 
-def hand_massage(hand, p):
-    pass
+
+# def does_it_fit(hand, grid):
+    # Check if at least one of the pieces in your hand at any moment
+    # fit onto the (immutable) game board (grid)
+    #
+    # # Return True if a piece can fit
+    #
+    # for p in hand:
+    #     px = p.shape[0]
+    #     py = p.shape[1]
+    #
+    #     if
+    #
+    #
+    # pass
+
+
+# def hand_massage(hand, p):
+#     pass

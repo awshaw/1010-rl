@@ -32,6 +32,7 @@ def main():
     _pieces = [0, 1, 2]
 
     score = 0
+    count = 0
 
     while not done:
         for event in pygame.event.get():  # User did something
@@ -60,15 +61,15 @@ def main():
                             locs = np.where(p_space == 2)
 
                     elif event.key == pygame.K_UP:
-                        if 1 <= min(locs[0]) < 9:
+                        if 1 <= min(locs[0]) <= 9:
                             # print(_pieces)
                             p_space[locs[0], locs[1]] = 0
                             p_space[locs[0]-1, locs[1]] = 2
                             locs = np.where(p_space == 2)
 
                     elif event.key == pygame.K_DOWN:
-                        if 0 < max(locs[0]) < 9:
-                            # print(_pieces)
+                        if 0 <= max(locs[0]) < 9:
+                            # print(_pieces1)
                             p_space[locs[0], locs[1]] = 0
                             p_space[locs[0]+1, locs[1]] = 2
                             locs = np.where(p_space == 2)
@@ -151,6 +152,7 @@ def main():
                         break
 
         # TODO: Edit logic
+        # Clear row/col's of 10
         for i in range(10):
             if np.sum(grid[i, ]) == 20:
                 score += 10
@@ -163,6 +165,33 @@ def main():
                     score += 20
                     grid[i, ] = 0
                     grid[:, j] = 0
+
+        print(_pieces)
+        # Check if game can continue
+        if len(_pieces) > 0:
+            for i in _pieces:
+                p = hand[i]
+                print(p)
+                count = 0
+                # print(np.sum(p))
+                x = p.shape[0]
+                y = p.shape[1]
+                for i in range(10):
+                    if i + x <= 10:
+                        for j in range(10):
+                            if j + y <= 10:
+                                ew_sum = np.sum([2*p, grid[i:i + x, j:j + y]])
+
+                                if ew_sum <= 2*np.sum(p):
+                                    count += 1
+        else:
+            count = 999999
+
+        print(count)
+        if count == 0:
+            font = pygame.font.SysFont('Calibri', 25, True, False)
+            text = font.render("Score {}".format(score), True, RED)
+            screen.blit(text, [200, 420])
 
         screen.fill(BLACK)
 
@@ -185,7 +214,6 @@ def main():
 
         #TODO: Remove piece from hand display when put in play
         # Draw pieces
-
         for p in range(len(hand)):
             tmp = hand[p]
             for i in range(tmp.shape[0]):
