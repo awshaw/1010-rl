@@ -106,9 +106,6 @@ def main():
                         p_space[5:5+px, 5:5+py] += p
 
                         _selected = 0
-                    elif len(_pieces) == 0:
-                        hand = pieces.rand_hand()
-                        _pieces = [0, 1, 2]
 
                     else:
                         break
@@ -125,10 +122,6 @@ def main():
 
                         _selected = 1
 
-                    elif len(_pieces) == 0:
-                        hand = pieces.rand_hand()
-                        _pieces = [0, 1, 2]
-
                     else:
                         break
                 elif event.key == pygame.K_3:
@@ -144,11 +137,6 @@ def main():
                         _selected = 2
 
                         # pieces.does_it_fit()
-
-                    elif len(_pieces) == 0:
-                        hand = pieces.rand_hand()
-                        _pieces = [0, 1, 2]
-
                     else:
                         break
 
@@ -177,14 +165,13 @@ def main():
                         for j in range(10):
                             if j + y <= 10:
                                 ew_sum = np.sum([2*p, grid[i:i + x, j:j + y]])
-
                                 if ew_sum <= 2*np.sum(p):
                                     count += 1
         else:
+            hand = pieces.rand_hand()
+            _pieces = [0, 1, 2]
             count = 999999
 
-        print(_pieces)
-        #print(count)
         if count == 0:
             font = pygame.font.SysFont('Calibri', 25, True, False)
             text = font.render("Score {}".format(score), True, RED)
@@ -211,7 +198,7 @@ def main():
 
         #TODO: Remove piece from hand display when put in play
         # Draw pieces
-        for p in range(len(hand)):
+        for p in _pieces:
             tmp = hand[p]
             for i in range(tmp.shape[0]):
                 for j in range(tmp.shape[1]):
