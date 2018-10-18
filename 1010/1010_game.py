@@ -77,7 +77,6 @@ def main():
                     # Return piece to hand, do not place
                     elif event.key == pygame.K_ESCAPE:
                         p_space[locs[0], locs[1]] = 0
-                        _pieces.append(_selected)
                         _selected = None
 
                     # Place piece
@@ -90,6 +89,9 @@ def main():
                         if np.shape(illegal_count)[1] == 0:
                             p_space[locs[0], locs[1]] = 0
                             grid[locs[0], locs[1]] = 2
+
+                            _pieces.remove(_selected)
+
                             # Update score for placed piece
                             score += (np.sum(elem_sum)/2)
 
@@ -104,7 +106,6 @@ def main():
                         p_space[5:5+px, 5:5+py] += p
 
                         _selected = 0
-                        _pieces.remove(0)
                     elif len(_pieces) == 0:
                         hand = pieces.rand_hand()
                         _pieces = [0, 1, 2]
@@ -123,7 +124,6 @@ def main():
                         p_space[5:5+px, 5:5+py] += p
 
                         _selected = 1
-                        _pieces.remove(1)
 
                     elif len(_pieces) == 0:
                         hand = pieces.rand_hand()
@@ -142,7 +142,8 @@ def main():
                         p_space[5:5 + px, 5:5 + py] += p
 
                         _selected = 2
-                        _pieces.remove(2)
+
+                        # pieces.does_it_fit()
 
                     elif len(_pieces) == 0:
                         hand = pieces.rand_hand()
@@ -182,6 +183,7 @@ def main():
         else:
             count = 999999
 
+        print(_pieces)
         #print(count)
         if count == 0:
             font = pygame.font.SysFont('Calibri', 25, True, False)
