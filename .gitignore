@@ -1,5 +1,6 @@
 __pycache__/
 envs/
 .idea/
+.ipynb_checkpoints/
 /to the index
 /Does_it_fit.ipynb
