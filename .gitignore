@@ -1,6 +1,9 @@
-__pycache__/
+# Folders
+1010/__pycache__/
 envs/
 .idea/
 .ipynb_checkpoints/
+
+# Random files
 /to the index
 /Does_it_fit.ipynb

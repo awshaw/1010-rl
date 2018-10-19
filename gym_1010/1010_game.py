@@ -46,41 +46,37 @@ def main():
 
                 if len(locs[1]) > 0:
 
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_a:
                         if 1 <= min(locs[1]) <= 9:
-                            # print(_pieces)
                             p_space[locs[0], locs[1]] = 0
                             p_space[locs[0], locs[1] - 1] = 2
                             locs = np.where(p_space == 2)
 
-                    elif event.key == pygame.K_RIGHT:
+                    elif event.key == pygame.K_d:
                         if 0 <= max(locs[1]) < 9:
-                            # print(_pieces)
                             p_space[locs[0], locs[1]] = 0
                             p_space[locs[0], locs[1] + 1] = 2
                             locs = np.where(p_space == 2)
 
-                    elif event.key == pygame.K_UP:
+                    elif event.key == pygame.K_w:
                         if 1 <= min(locs[0]) <= 9:
-                            # print(_pieces)
                             p_space[locs[0], locs[1]] = 0
                             p_space[locs[0]-1, locs[1]] = 2
                             locs = np.where(p_space == 2)
 
-                    elif event.key == pygame.K_DOWN:
+                    elif event.key == pygame.K_s:
                         if 0 <= max(locs[0]) < 9:
-                            # print(_pieces1)
                             p_space[locs[0], locs[1]] = 0
                             p_space[locs[0]+1, locs[1]] = 2
                             locs = np.where(p_space == 2)
 
                     # Return piece to hand, do not place
-                    elif event.key == pygame.K_ESCAPE:
+                    elif event.key == pygame.K_q:
                         p_space[locs[0], locs[1]] = 0
                         _selected = None
 
                     # Place piece
-                    elif event.key == pygame.K_TAB:
+                    elif event.key == pygame.K_e:
                         elem_sum = np.sum([p_space[locs[0], locs[1]], grid[locs[0], locs[1]]], axis=0)
                         # print(elem_sum)
                         illegal_count = np.where(elem_sum >= 3)
@@ -150,7 +146,9 @@ def main():
         for l in columns_to_clear[0]:
             grid[:, l] = 0
 
-        #print(_pieces)
+        # print(_pieces)
+        # print(count)
+
         # Check if game can continue
         if len(_pieces) > 0:
             for i in _pieces:
@@ -173,9 +171,11 @@ def main():
             count = 999999
 
         if count == 0:
-            font = pygame.font.SysFont('Calibri', 25, True, False)
-            text = font.render("Score {}".format(score), True, RED)
-            screen.blit(text, [200, 420])
+            print(grid)
+            for i in _pieces:
+                print(hand[i])
+            done = True
+
 
         screen.fill(BLACK)
 
@@ -196,7 +196,6 @@ def main():
                                   WIDTH,
                                   HEIGHT])
 
-        #TODO: Remove piece from hand display when put in play
         # Draw pieces
         for p in _pieces:
             tmp = hand[p]
