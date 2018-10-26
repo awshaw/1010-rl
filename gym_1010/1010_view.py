@@ -1,10 +1,10 @@
-import pygame
 import numpy as np
-
+import pygame
 import pieces
 
-class TenTen:
 
+
+class TenTen:
 
 	def __init__(self):
 		# Pygame configs
@@ -45,7 +45,14 @@ class TenTen:
         # Initial grid
         self.update_grid()
 
-    def move_piece(self, action, current_piece, play_grid, grid, score):
+
+    def find_current_piece(self):
+    	# find where cells in the play space = 2 
+       return np.where(p_space == 2)
+
+    def move_piece(self, key):
+    	locs = find_current_piece()
+
 
 
     def place_piece(self, current_piece, play_grid, grid, score):
